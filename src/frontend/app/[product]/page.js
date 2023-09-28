@@ -41,6 +41,7 @@ export default async function Page({ params }) {
           <img src={`${stock.Product.Name}.png`} className={styles.image} />
           <p className={styles.size}>{stock.Product.Size} {stock.Product.Unit}</p>
           <p className={styles.stock}>{stock.Count} in stock</p>
+          <p className={styles.description}>{stock.Product.Description}</p>
         </div>
         <p className="homelink">
           <a href="/">Home</a>

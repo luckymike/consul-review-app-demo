@@ -15,6 +15,7 @@ type Product struct {
 	Name string
 	Size int
 	Unit string
+	Description string
 }
 
 var catalog = []Product {
@@ -22,31 +23,37 @@ var catalog = []Product {
 		Name: "Milk",
 		Size: 9,
 		Unit: "ounces",
+		Description: "A creamy, whole-fat treat. Produced by the finest cows in California.",
 	},
 	Product{
 		Name: "Lemonade",
 		Size: 750,
 		Unit: "milliliters",
+		Description: "Summer's favorite refreshment. Fresh lemon sourness with just the right amount of sweetness. This will take you back to the lemonade stands of your childhood.",
 	},
 	Product{
 		Name: "Mexican Coke",
 		Size: 12,
 		Unit: "ounces",
+		Description: "The classic. Made with real sugar in a glass bottle.",
 	},
 	Product{
 		Name: "Water",
 		Size: 200,
 		Unit: "milliliters",
+		Description: "Fresh, cold, calorie-free refreshment. Bottled at the source.",
 	},
 	Product{
 		Name: "Fanta",
 		Size: 12,
 		Unit: "ounces",
+		Description: "The international favorite. Bright flavor and bright color.",
 	},
 	Product{
 		Name: "Sprite",
 		Size: 16,
 		Unit: "ounces",
+		Description: "Lemon-lime refreshment. A tasty beverage perfect for washing down a cheeseburger.",
 	},
 }
 
