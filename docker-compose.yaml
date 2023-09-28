@@ -1,0 +1,28 @@
+---
+services:
+  catalog:
+    build: ./src/catalog
+    ports:
+      - 8081:3000
+    environment:
+      PORT: 3000
+  inventory:
+    build: ./src/inventory
+    ports:
+      - 8082:3000
+    environment:
+      PORT: 3000
+  api:
+    build: ./src/api
+    ports:
+      - 8083:3000
+    environment:
+      PORT: 3000
+      CATALOG_URL: "catalog:3000"
+      INVENTORY_URL: "inventory:3000"
+  frontend:
+    build: ./src/frontend
+    ports:
+      - 8080:3000
+    environment:
+      API_URL: 'http://api:3000'

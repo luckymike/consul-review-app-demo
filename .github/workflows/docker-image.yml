@@ -1,0 +1,37 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+      
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        
+    - name: Build all Docker images
+      run: |
+        docker build src/frontend --file src/frontend/Dockerfile --tag reverseskate/consul-review-app-demo-frontend:${{ github.sha }}
+        docker build src/api --file src/api/Dockerfile --tag reverseskate/consul-review-app-demo-api:${{ github.sha }}
+        docker build src/catalog --file src/catalog/Dockerfile --tag reverseskate/consul-review-app-demo-catalog:${{ github.sha }}
+        docker build src/inventory --file src/inventory/Dockerfile --tag reverseskate/consul-review-app-demo-inventory:${{ github.sha }}
+        
+    - name: Push all Docker images
+      run: |
+        docker push reverseskate/consul-review-app-demo-frontend:${{ github.sha }}
+        docker push reverseskate/consul-review-app-demo-api:${{ github.sha }}
+        docker push reverseskate/consul-review-app-demo-catalog:${{ github.sha }}
+        docker push reverseskate/consul-review-app-demo-inventory:${{ github.sha }}
