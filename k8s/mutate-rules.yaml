@@ -1,0 +1,108 @@
+---
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: add-consul-meta
+spec:
+  rules:
+    - name: add-consul-meta
+      match:
+        all:
+        - resources:
+            kinds:
+            - Deployment
+            namespaces:
+            - "review-*"
+      mutate:
+        patchStrategicMerge:
+          spec:
+            template:
+              metadata:
+                annotations:
+                  +(consul.hashicorp.com/service-meta-namespace): "{{ request.namespace }}"
+                  +(consul.hashicorp.com/service-meta-version): "{{images.containers.{{ request.object.metadata.name }}.tag}}"
+
+---
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: add-consul-resolver
+spec:
+  mutateExistingOnPolicyUpdate: true
+  schemaValidation: false
+  rules:
+    - name: add-consul-resolver
+      match:
+        all:
+        - resources:
+            kinds:
+            - Deployment
+            operations:
+            - CREATE
+            - UPDATE
+            namespaces:
+            - "review-*"
+      mutate:
+        targets:
+          - apiVersion: consul.hashicorp.com/v1alpha1
+            kind: ServiceResolver
+            name: "{{request.object.metadata.name}}"
+            namespace: consul
+        patchStrategicMerge:
+          spec:
+            subsets:
+              +({{ request.namespace }}):
+                filter: 'Service.Meta.namespace == "{{request.namespace}}"'
+                onlyPassing: true
+              +(review-{{images.containers.{{ request.object.metadata.name }}.tag}}):
+                filter: 'Service.Meta.version == "{{images.containers.{{ request.object.metadata.name }}.tag}}"'
+                onlyPassing: true
+---
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: add-consul-router
+spec:
+  mutateExistingOnPolicyUpdate: true
+  schemaValidation: false
+  rules:
+    - name: add-consul-router
+      match:
+        all:
+        - resources:
+            kinds:
+            - Deployment
+            operations:
+            - CREATE
+            - UPDATE
+            namespaces:
+            - "review-*"
+      mutate:
+        targets:
+          - apiVersion: consul.hashicorp.com/v1alpha1
+            kind: ServiceRouter
+            name: "{{request.object.metadata.name}}"
+            namespace: consul
+        patchesJson6902: |-
+          - op: add
+            path: "/spec/routes/-"
+            value:
+              match:
+                http:
+                  header:
+                    - name: x-acme-review-namespace
+                      exact: "{{request.namespace}}"
+              destination:
+                service: "{{request.object.metadata.name}}"
+                serviceSubset: "{{request.namespace}}"
+          - op: add
+            path: "/spec/routes/-"
+            value:
+              match:
+                http:
+                  header:
+                    - name: "x-acme-{{request.object.metadata.name}}-version"
+                      exact: "{{images.containers.{{ request.object.metadata.name }}.tag}}"
+              destination:
+                service: "{{request.object.metadata.name}}"
+                serviceSubset: "review-{{images.containers.{{ request.object.metadata.name }}.tag}}"

@@ -1,0 +1,4 @@
+podAnnotations:
+  consul.hashicorp.com/connect-inject: "true"
+  # This is the CIDR of your Kubernetes API: `kubectl get svc kubernetes --output jsonpath='{.spec.clusterIP}'
+  consul.hashicorp.com/transparent-proxy-exclude-outbound-cidrs: "10.96.0.1/32"

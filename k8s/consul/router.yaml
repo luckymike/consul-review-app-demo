@@ -1,0 +1,42 @@
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceRouter
+metadata:
+  name: api
+  namespace: consul
+spec:
+  routes:
+    - match:
+        http:
+          pathPrefix: /api/
+      destination:
+        prefixRewrite: /
+    - match:
+        http:
+          pathExact: /api
+      destination:
+        prefixRewrite: /
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceRouter
+metadata:
+  name: frontend
+  namespace: consul
+spec:
+  routes: []
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceRouter
+metadata:
+  name: catalog
+  namespace: consul
+spec:
+  routes: []
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceRouter
+metadata:
+  name: inventory
+  namespace: consul
+spec:
+  routes: []

@@ -1,0 +1,52 @@
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceIntentions
+metadata:
+  name: api
+  namespace: consul
+spec:
+  destination:
+    name: api
+  sources:
+  - action: allow
+    name: frontend
+  - action: allow
+    name: ngrok-ingress-controller-kubernetes-ingress-controller
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceIntentions
+metadata:
+  name: catalog
+  namespace: consul
+spec:
+  destination:
+    name: catalog
+  sources:
+    - name: api
+      action: allow
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceIntentions
+metadata:
+  name: frontend
+  namespace: consul
+spec:
+  destination:
+    name: frontend
+  sources:
+  - action: allow
+    name: ngrok-ingress-controller-kubernetes-ingress-controller
+  - action: allow
+    name: frontend
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceIntentions
+metadata:
+  name: inventory
+  namespace: consul
+spec:
+  destination:
+    name: inventory
+  sources:
+    - name: api
+      action: allow

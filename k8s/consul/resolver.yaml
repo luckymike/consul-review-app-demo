@@ -1,0 +1,48 @@
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceResolver
+metadata:
+  name: api
+  namespace: consul
+spec:
+  defaultSubset: default
+  subsets:
+    default:
+      filter: 'Service.Meta.namespace not matches "^review-.*"'
+      onlyPassing: true
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceResolver
+metadata:
+  name: catalog
+  namespace: consul
+spec:
+  defaultSubset: default
+  subsets:
+    default:
+      filter: 'Service.Meta.namespace not matches "^review-.*"'
+      onlyPassing: true
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceResolver
+metadata:
+  name: frontend
+  namespace: consul
+spec:
+  defaultSubset: default
+  subsets:
+    default:
+      filter: 'Service.Meta.namespace not matches "^review-.*"'
+      onlyPassing: true
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceResolver
+metadata:
+  name: inventory
+  namespace: consul
+spec:
+  defaultSubset: default
+  subsets:
+    default:
+      filter: 'Service.Meta.namespace not matches "^review-.*"'
+      onlyPassing: true
