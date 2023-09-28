@@ -2,7 +2,6 @@ import { headers } from 'next/headers'
 
 import Head from 'next/head';
 import '../globals.css'
-import './page.css'
 import styles from '../Style.module.css';
 
 async function getStock(product) {
