@@ -35,13 +35,12 @@ export default async function Page({ params }) {
         <h1 className={styles.title}>
           Beppo's Bottle Shop
         </h1>
-
         <div className={styles.details}>
           <p className={styles.name}>{stock.Product.Name}</p>
-          <img src={`${stock.Product.Name}.png`} className={styles.image} />
           <p className={styles.size}>{stock.Product.Size} {stock.Product.Unit}</p>
-          <p className={styles.stock}>{stock.Count} in stock</p>
+          <img src={`${stock.Product.Name}.png`} className={styles.image} />
           <p className={styles.description}>{stock.Product.Description}</p>
+          <p className={styles.stock}>{stock.Count} in stock</p>
         </div>
         <p className="homelink">
           <a href="/">Home</a>
