@@ -61,8 +61,6 @@
   transition: color 0.15s ease, border-color 0.15s ease;
   text-transform: capitalize;
   background: #FFFAFB;
-
-  /*#AD8350, #00A6FB*/
 }
 
 .card img {
@@ -130,8 +128,6 @@
     text-transform: capitalize;
     background: #FFFAFB;
     min-width: 460px;
-
-    /*#AD8350, #00A6FB*/
 }
 
 .details p {
