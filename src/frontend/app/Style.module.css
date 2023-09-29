@@ -125,7 +125,7 @@
     border: 1px solid #750505;
     border-radius: 10px;
     transition: color 0.15s ease, border-color 0.15s ease;
-    text-transform: capitalize;
+    text-transform: none;
     background: #FFFAFB;
     min-width: 20%;
     max-width: 33%;
