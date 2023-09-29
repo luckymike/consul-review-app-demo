@@ -125,9 +125,10 @@
     border: 1px solid #750505;
     border-radius: 10px;
     transition: color 0.15s ease, border-color 0.15s ease;
-    text-transform: capitalize;
+    text-transform: none;
     background: #FFFAFB;
-    min-width: 460px;
+    min-width: 20%;
+    max-width: 33%;
 }
 
 .details p {
@@ -139,4 +140,13 @@
     display: block;
     height: 10em;
     width: 10em;
+}
+
+.description {
+    font-style: italic;
+    font-size: .9em;
+}
+
+.size, .stock {
+    font-size: .7em;
 }
