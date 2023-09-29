@@ -40,7 +40,7 @@ export default async function Page({ params }) {
           <p className={styles.size}>{stock.Product.Size} {stock.Product.Unit}</p>
           <img src={`${stock.Product.Name}.png`} className={styles.image} />
           <p className={styles.description}>{stock.Product.Description}</p>
-          <p className={styles.stock}>{stock.Count} in stock</p>
+          <p className={styles.stock}>{stock.Count} In Stock</p>
         </div>
         <p className="homelink">
           <a href="/">Home</a>
